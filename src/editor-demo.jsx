@@ -19,32 +19,15 @@ const enabledFeatures = {
     useMathQuill: true,
 };
 
-const defaultQuestion = {
-    "question": {
-        "content": "",
-        "images": {},
-        "widgets": {},
-    },
-    "answerArea": {
-        "calculator": false,
-    },
-    "itemDataVersion": {
-        "major": 0,
-        "minor": 1,
-    },
-    "hints": [],
-};
-
 const EditorDemo = React.createClass({
     propTypes: {
         problemNum: React.PropTypes.number,
-        question: React.PropTypes.any,
+        question: React.PropTypes.any.isRequired,
     },
 
     getDefaultProps: function() {
         return {
             problemNum: 1,
-            question: defaultQuestion,
         };
     },
 
@@ -71,7 +54,7 @@ const EditorDemo = React.createClass({
 
     viewRendered: function(e) {
         const link = document.createElement("a");
-        link.href = "/testrender.html#content=" +
+        link.href = "/renderer#content=" +
             Util.strongEncodeURIComponent(JSON.stringify(this.refs.editor.serialize()));
         link.target = "_blank";
         link.click();

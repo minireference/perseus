@@ -288,7 +288,7 @@ var IMAGE_REGEX = /!\[[^\]]*\]\(([^\s\)]+)[^\)]*\)/g;
  */
 var allMatches = function(regex, str) {
     var result = [];
-    while (true) { // @Nolint
+    while (true) { // eslint-disable-line
         var match = regex.exec(str);
         if (!match) {
             break;
