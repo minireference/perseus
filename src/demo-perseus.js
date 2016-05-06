@@ -87,15 +87,15 @@ const question = query.content ? JSON.parse(query.content) : defaultQuestion;
 const problemNum = Math.floor(Math.random() * 100);
 
 // React router v20XX
-const pathname = window.location.pathname;
+const path = window.location.search.substring(1);
 const routes = { // The value is spread across a React.createElement call
-    '/renderer': [RendererDemo, {question, problemNum}],
-    '/': [EditorDemo, {question, problemNum}],
+    'renderer': [RendererDemo, {question, problemNum}],
+    '': [EditorDemo, {question, problemNum}],
 };
 
 Perseus.init({skipMathJax: false}).then(function() {
     DemoComponent = ReactDOM.render(
-        React.createElement(...(routes[pathname] || routes['/'])),
+        React.createElement(...(routes[path] || routes[''])),
         document.getElementById("perseus-container")
     );
 }).then(function() {

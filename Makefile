@@ -7,6 +7,7 @@ SUPPRESSINSTALL=FALSE
 API_VERSION_MAJOR:=$(shell node node/echo-major-api-version.js)
 PERSEUS_BUILD_JS=build/perseus-$(API_VERSION_MAJOR).js
 PERSEUS_BUILD_CSS=build/perseus-$(API_VERSION_MAJOR).css
+PERSEUS_DEMO_BUILD_JS=build/demo-perseus.js
 PERSEUS_NODE_BUILD_JS=build/node-perseus.js
 PERSEUS_EDITOR_BUILD_JS=build/editor-perseus.js
 PERSEUS_VERSION_FILE=build/perseus-$(API_VERSION_MAJOR)-item-version.js
@@ -40,6 +41,17 @@ $(PERSEUS_NODE_BUILD_JS): install
 	cat build/node-perseus.js.tmp >> $(PERSEUS_NODE_BUILD_JS)
 	rm build/node-perseus.js.tmp
 
+
+$(PERSEUS_DEMO_BUILD_JS): install
+	mkdir -p build
+	NODE_ENV=production INCLUDE_EDITORS=true ./node_modules/.bin/webpack --config webpack.config.demo-perseus.js
+	mv $@ $@.tmp
+	echo '/*! Demo perseus | http://github.com/Khan/perseus */' > $@
+	echo "// commit `git rev-parse HEAD`" >> $@
+	echo "// branch `git rev-parse --abbrev-ref HEAD`" >> $@
+	cat $@.tmp >> $@
+	rm $@.tmp
+
 $(PERSEUS_EDITOR_BUILD_JS): install
 	mkdir -p build
 	NODE_ENV=production INCLUDE_EDITORS=true ./node_modules/.bin/webpack
@@ -67,13 +79,20 @@ server-offline:
 	INCLUDE_EDITORS=true __DEV__=true ./node_modules/.bin/webpack-dev-server --config webpack.config.demo-perseus.js --port $(PORT) --output-public-path build/ --devtool inline-source-map
 
 demo:
-	git checkout gh-pages
-	git reset --hard origin/master
-	make build
-	git add -f $(PERSEUS_BUILD_JS)
+	git remote set-branches --add origin gh-pages
+	git fetch origin
+	git checkout -B gh-pages origin/gh-pages
+	git reset --hard origin/testrender-cleanup
+	make build/demo-perseus.js
+	git add -f build/demo-perseus.js
+	git config user.name "Emily Eisenberg"
+	git config user.email "emily@khanacademy.org"
 	git commit -nm 'demo update'
-	git checkout master
-	git push -f origin gh-pages:gh-pages
+	git checkout origin/testrender-cleanup
+	ssh-agent bash -c 'ssh-add travis_deploy_rsa; git push -f git@github.com:Khan/perseus.git gh-pages:gh-pages'
+	# eval `ssh-agent -s`
+	# ssh-add travis_deploy_rsa
+	# git push -f origin gh-pages:gh-pages
 
 all: subperseus
 
