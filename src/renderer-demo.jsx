@@ -9,7 +9,7 @@
 
 const React = require('react');
 const { StyleSheet, css } = require('aphrodite');
-const ReactDOM = React.__internalReactDOM;
+const ReactDOM = require('react-dom');
 
 const ItemRenderer = require('./item-renderer.jsx');
 const SimpleButton = require('./simple-button.jsx');
@@ -81,10 +81,7 @@ const RendererDemo = React.createClass({
                     answer.correct ? 'Correct!' : 'Incorrect, try again.')}
             </SimpleButton>
             <img
-                className={css(styles.smiley)}
-                style={{
-                    display: (showSmiley ? 'inherit' : 'none'),
-                }}
+                className={css(styles.smiley, !showSmiley && styles.hideSmiley)}
                 src="/images/face-smiley.png"
             />
         </div>;
@@ -93,35 +90,17 @@ const RendererDemo = React.createClass({
 
         return (
             <div className="renderer-demo">
-                <div
-                    className={css(styles.problemAndAnswer)}
-                >
+                <div className={css(styles.problemAndAnswer)}>
                     <div id="problem-area">
                         <div id="workarea"/>
                         <div id="hintsarea"/>
                     </div>
-                    <div
-                        id="answer-area-wrap"
-                        style={{
-                            margin: "52px -8px 0 0",
-                            float: "right",
-                            width: "27%",
-                        }}
-                    >
+                    <div className={css(styles.answerAreaWrap)}>
                         <div id="answer-area">
-                            <div
-                                className={css(styles.infoBox)}
-                            >
+                            <div className={css(styles.infoBox)}>
                                 <b>Answer</b>
                                 <div id="solutionarea"></div>
-                                <div
-                                    className="answer-buttons"
-                                    style={{
-                                        margin: '0 -10px',
-                                        padding: '10px 10px 0',
-                                        position: 'relative',
-                                    }}
-                                >
+                                <div className={css(styles.answerButtons)}>
                                 {answerButton}
                                 </div>
                             </div>
@@ -151,41 +130,55 @@ const RendererDemo = React.createClass({
 
 const styles = StyleSheet.create({
     problemAndAnswer: {
-        width: "797px",
-        minHeight: "257px",
-        margin: "20px",
+        width: 797,
+        minHeight: 257,
+        margin: 20,
         position: "relative",
         border: "1px solid #cccccc",
         borderBottom: "1px solid #aaa",
         boxShadow: "0 1px 3px #ccc",
     },
+    smiley: {
+        width: 28,
+        position: 'absolute',
+        top: 7,
+        left: 5,
+        cursor: 'pointer',
+    },
+    hideSmiley: {
+        display: 'none',
+    },
+    answerAreaWrap: {
+        margin: "52px -8px 0 0",
+        float: "right",
+        width: "27%",
+    },
+    answerButtons: {
+        margin: '0 -10px',
+        padding: '10px 10px 0',
+        position: 'relative',
+    },
     infoBox: {
         background: '#eee',
         border: "1px solid #aaa",
         color: "#333",
-        marginBottom: "10px",
-        padding: "10px",
+        marginBottom: 10,
+        padding: 10,
         position: "relative",
-        zIndex: "10",
+        zIndex: 10,
         boxShadow: "0 1px 2px #ccc",
         overflow: "visible",
         ':before': {
             content: '" "',
             borderRight: "8px solid transparent",
             borderBottom: "8px solid #cccccc",
-            height: "16px",
+            height: 16,
             position: "absolute",
-            right: "-1px",
-            top: "-24px",
+            right: -1,
+            top: -24,
         },
-    },
-    smiley: {
-        width: '28px',
-        position: 'absolute',
-        top: '7px',
-        'left': '5px',
-        'cursor': 'pointer',
     },
 });
 
 module.exports = RendererDemo;
+

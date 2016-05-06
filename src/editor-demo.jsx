@@ -45,17 +45,18 @@ const EditorDemo = React.createClass({
         console.log(this.refs.editor.scorePreview());
     },
 
+    _getContentHash: function() {
+        return Util.strongEncodeURIComponent(JSON.stringify(this.refs.editor.serialize()));
+    },
+
     permalink: function(e) {
-        window.location.hash = `content=${
-            Util.strongEncodeURIComponent(JSON.stringify(this.refs.editor.serialize()))
-        }`;
+        window.location.hash = `content=${this._getContentHash()}`;
         e.preventDefault();
     },
 
     viewRendered: function(e) {
         const link = document.createElement("a");
-        link.href = "/renderer#content=" +
-            Util.strongEncodeURIComponent(JSON.stringify(this.refs.editor.serialize()));
+        link.href = window.location.pathname + "?renderer#content=" + this._getContentHash();
         link.target = "_blank";
         link.click();
         e.preventDefault();
