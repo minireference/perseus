@@ -37,6 +37,18 @@ standalonebuild:
 	NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.standalone.js
 	echo "building ke-deps-bundle.js  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	./node_modules/requirejs/bin/r.js -o ke-deps.build.js
+	echo "copying files to build/standalone/ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+	mkdir -p build/standalone/build
+	cp standalone.html build/standalone/
+	cp -r lib build/standalone/
+	cp ke-deps-bundle.js build/standalone/
+	cp build/perseus.js build/standalone/build/perseus.js
+	cp -r fonts build/standalone/
+	cp -r stylesheets build/standalone/
+	cp -r images build/standalone/
+	cp -r simple-markdown build/standalone/
+	cp -r ke build/standalone/
+	
 
 $(PERSEUS_NODE_BUILD_JS): install
 	mkdir -p build
