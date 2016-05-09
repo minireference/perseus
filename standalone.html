@@ -17,6 +17,12 @@
 </head>
 <body>
 
+
+<div id="exercice-sequence">
+  <a href="#content={%22question%22%3A{%22content%22%3A%22Hello.%20Which%20is%20the%20number%20that%20is%20the%20answer%20to%20the%20universe%20and%20evertyhing%20%20nx%20%3D%20[[%E2%98%83%20numeric-input%201]]nnn%22%2C%22images%22%3A{}%2C%22widgets%22%3A{%22numeric-input%201%22%3A{%22type%22%3A%22numeric-input%22%2C%22alignment%22%3A%22default%22%2C%22static%22%3Afalse%2C%22graded%22%3Atrue%2C%22options%22%3A{%22static%22%3Afalse%2C%22answers%22%3A[{%22value%22%3A42%2C%22status%22%3A%22correct%22%2C%22message%22%3A%22%22%2C%22simplify%22%3A%22required%22%2C%22strict%22%3Afalse%2C%22maxError%22%3Anull}]%2C%22size%22%3A%22normal%22%2C%22coefficient%22%3Afalse%2C%22labelText%22%3A%22%22}%2C%22version%22%3A{%22major%22%3A0%2C%22minor%22%3A0}}}}%2C%22answerArea%22%3A{%22calculator%22%3Afalse%2C%22chi2Table%22%3Afalse%2C%22periodicTable%22%3Afalse%2C%22tTable%22%3Afalse%2C%22zTable%22%3Afalse}%2C%22itemDataVersion%22%3A{%22major%22%3A0%2C%22minor%22%3A1}%2C%22hints%22%3A[{%22replace%22%3Afalse%2C%22content%22%3A%22A%20hitn%20is%20this.%22%2C%22images%22%3A{}%2C%22widgets%22%3A{}}]}">example</a>
+</div>
+
+
 <div id="problem-and-answer" class="bibliotron-exercise current-card framework-perseus vertical-shadow" style="width: 797px; margin: 20px;">
     <div id="problemarea">
         <div id="workarea"></div>
@@ -162,7 +168,7 @@
                 },
                 apiOptions: {
                     responsiveStyling: true,
-                    getAnotherHint: () => {
+                    getAnotherHint: function() {
                         window.itemRenderer.showHint();
                     },
                 },
