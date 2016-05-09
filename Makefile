@@ -30,6 +30,13 @@ $(PERSEUS_BUILD_JS): install
 	echo "// @gene""rated" >> $@
 	cat $@.tmp >> $@
 	rm $@.tmp
+	
+standalonebuild: 
+	mkdir -p build
+	echo "building build/perseus.js <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+	NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.standalone.js
+	echo "building ke-deps-bundle.js  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+	./node_modules/requirejs/bin/r.js -o ke-deps.build.js
 
 $(PERSEUS_NODE_BUILD_JS): install
 	mkdir -p build
@@ -120,7 +127,7 @@ clean:
 	-rm -rf build/*
 
 lint:
-	~/khan/devtools/khan-linter/runlint.py
+	/Users/ivan/Projects/Minireference/mobile/khan-linter/runlint.py
 
 FIND_TESTS_1 := find -E src -type f -regex '.*/__tests__/.*\.jsx?'
 FIND_TESTS_2 := find src -type f -regex '.*/__tests__/.*\.jsx?'
