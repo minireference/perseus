@@ -1,17 +1,28 @@
-# Perseus
+# Perseus mobile
 
-[![Build Status](https://travis-ci.org/Khan/perseus.svg?branch=master)](https://travis-ci.org/Khan/perseus)
-[![Join the chat at https://gitter.im/Khan/perseus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Khan/perseus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+The goal is to package the perseus renderer as a standalone js application that
+can run in a WebView.
 
-Perseus is Khan Academy's new exercise question editor and renderer. It allows
-you to create and display interactive questions.
 
-![screenshot of Perseus](https://s3.amazonaws.com/uploads.hipchat.com/6574/26709/TfZBRXV0nmRH64g/upload.png)
 
-## Live demo
+TODO:
 
-Our test page isn't much yet, but you can check out a
-[live demo of it here](http://khan.github.io/perseus/)!
+  - add css for Image max-width
+
+Done:
+
+  - build single js bundle of ke dependencies (using r.js, see `ke-deps.build.js`)
+  - build non-requirejs bundle of perseus (see `webpack.config.standalone.js`)
+  - added `standalonebuild` target to Makefile for the above two
+
+
+## Standalone build
+
+[example](http://localhost:9000/standalone.html#content={"question"%3A{"content"%3A"Hello. Which is the number that is the answer to the universe and evertyhing  \nx %3D [[☃ numeric-input 1]]\n\n\n"%2C"images"%3A{}%2C"widgets"%3A{"numeric-input 1"%3A{"type"%3A"numeric-input"%2C"alignment"%3A"default"%2C"static"%3Afalse%2C"graded"%3Atrue%2C"options"%3A{"static"%3Afalse%2C"answers"%3A[{"value"%3A42%2C"status"%3A"correct"%2C"message"%3A""%2C"simplify"%3A"required"%2C"strict"%3Afalse%2C"maxError"%3Anull}]%2C"size"%3A"normal"%2C"coefficient"%3Afalse%2C"labelText"%3A""}%2C"version"%3A{"major"%3A0%2C"minor"%3A0}}}}%2C"answerArea"%3A{"calculator"%3Afalse%2C"chi2Table"%3Afalse%2C"periodicTable"%3Afalse%2C"tTable"%3Afalse%2C"zTable"%3Afalse}%2C"itemDataVersion"%3A{"major"%3A0%2C"minor"%3A1}%2C"hints"%3A[{"replace"%3Afalse%2C"content"%3A"A hitn is this."%2C"images"%3A{}%2C"widgets"%3A{}}]})
+
+
+
+
 
 ## Getting Started
 
@@ -24,46 +35,6 @@ To package perseus for distribution, run `make build` and to package a debug-fri
 Both the `build` and the `server` make targets will run `npm install` but you can also run it yourself to install all node dependencies.
 
 
-## Versioning
-
-Perseus uses two types of version numbers: the version of the itemData/content
-that can be sent to `ItemRenderer`/`Renderer`, and the version of the api
-exposed through the `ItemRenderer`/`Renderer` apiOptions prop.  These
-are set in `src/version.json`.
-
-### itemData versioning
-
-Item data versioning has two subtypes of versions: a global `itemDataVersion`
-for the itemData/content format sent to ItemRenderer/Renderer, and per-widget
-version numbers for the `options` sent to each widget. All of these version
-numbers exist both in perseus.js and in the itemData saved to the datastore
-by the Perseus editor.
-
-Each of these versions consists of a major and minor version number.
-A perseus version can render an itemData version iff its global
-`itemDataVersion` and each of its widget versions are greater than or equal
-to those sent to perseus as itemData. A major version increase will happen
-when the saving format of this itemData has changed. Perseus clients should
-not need to care about this distinction, but it is important to Perseus'
-implementation of backwards-compatibility.
-
-### apiOptions versioning
-
-The version of the `apiOptions` prop sent to `ItemRenderer` or `Renderer`
-is stored on `Perseus.apiVersion`. A minor version increase indicates an
-optional additional parameter to this interface. A major version increase
-indicates a not-backwards-compatible change to this API. A perseus client
-should rely on a specific major version of perseus, and should be able to
-use any future minor version increase without changes, but not necessarily
-previous minor versions. For example, if a client begins using version 1.2,
-Perseus api versions 1.3 or 1.4 will work transparently, but Perseus api
-versions 1.0, 1.1, 2.0, or 2.2 will not work.
-
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for a walkthrough of how some
-of the Perseus code works and how to extend it.
 
 
 ## License
