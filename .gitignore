@@ -6,3 +6,8 @@ node_modules/*
 !node_modules/underscore/
 
 perseus.sublime-workspace
+
+
+build
+ke-deps-bundle.js
+
