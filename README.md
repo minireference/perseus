@@ -3,6 +3,10 @@
 The goal is to package the perseus renderer as a standalone js application that
 can run in a WebView.
 
+Proof of concept:
+
+![Perseus renderer working in a WebView](images/POV_in_android_WebView.png)
+
 
 
 TODO:
